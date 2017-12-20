@@ -1,4 +1,4 @@
-#from Piece import Piece
+import Piece
 class Board:
     def __init__(self):
         #create board

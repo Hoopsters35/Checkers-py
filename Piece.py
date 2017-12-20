@@ -1,4 +1,4 @@
-from Board import Board
+import Board
 class Piece:
     def __init__(self, team, position):
         self.team = team
@@ -30,6 +30,6 @@ class Piece:
         self.king = True
 
 if __name__ == '__main__':
-    board = Board()
+    board = Board.Board()
     board.display1()
     board.display2()
