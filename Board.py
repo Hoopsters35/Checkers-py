@@ -2,7 +2,7 @@ import Piece
 class Board:
     def __init__(self):
         self.board = {}
-        self.validsquares = set()
+        self.validsquares = []
         self.squares1 = set()
         self.squares2 = set()
         self.opensquares = set()
@@ -26,14 +26,14 @@ class Board:
         #define validsquares
         for key in self.board.keys():
             if self.board[key] != '-':
-                self.validsquares.add(key)
+                self.validsquares.append(key)
 
         #populates initial occupied and unoccupied square sets
         self.updateboard()
 
     #updates occupied and unoccupied squre sets
     def updateboard(self):
-        for square in self.board.keys():
+        for square in self.validsquares:
             if self.board[square] ==  '1':
                 self.squares1.add(square)
             elif self.board[square] == '2':
