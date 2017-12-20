@@ -43,6 +43,7 @@ class Board:
         print(' |___________________|')
         print('    h g f e d c b a')
 
-board = Board()
-board.display1()
-board.display2()
+if __name__ == '__main__':
+    board = Board()
+    board.display1()
+    board.display2()
