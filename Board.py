@@ -1,8 +1,12 @@
 import Piece
 class Board:
     def __init__(self):
-        #create board
         self.board = {}
+        self.validsquares = set()
+        self.squares1 = set()
+        self.squares2 = set()
+
+        #create board
         letters = 'abcdefgh'
         for letter in letters:
             for num in range(1, 9):
@@ -12,17 +16,23 @@ class Board:
                 val = '0'
                 if (letter in 'aceg' and num % 2 == 0) or (letter in 'bdfh' and num % 2 == 1):
                     val = '-'
-                elif (num in [1,3] and letters.index(letter) % 2 == 0) or (num == 2 and letters.index(letter)  == 1):
+                elif (num in [1,3] and letters.index(letter) % 2 == 0) or (num == 2 and letters.index(letter) % 2 == 1):
                     val = '1'
                 elif (num in [6,8] and letters.index(letter) % 2 == 1) or (num == 7 and letters.index(letter)  % 2 == 0):
                     val = '2'
                 self.board[key] = val
 
-        self.validsquares = set()
         #define validsquares
         for key in self.board.keys():
             if self.board[key] != '-':
                 self.validsquares.add(key)
+
+        #populate squares1 and squares2
+        for square in self.board.keys():
+            if self.board[square] ==  '1':
+                self.squares1.add(square)
+            elif self.board[square] == '2':
+                self.squares2.add(square)
 
     def display1(self):
         print('  ___________________')
@@ -54,3 +64,5 @@ if __name__ == '__main__':
     board = Board()
     board.display1()
     board.display2()
+    print(board.squares1)
+    print(board.squares2)
