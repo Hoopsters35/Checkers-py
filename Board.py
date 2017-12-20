@@ -2,30 +2,33 @@
 class Board:
     def __init__(self):
         self.board = {}
-        for letter in ['a','b','c','d','e','f','g','h']:
+        letters = 'abcdefgh'
+        for letter in letters:
             for num in range(1, 9):
+                #creates [letter][number] ID system
                 key = '{0}{1}'.format(letter, num)
+                #0 = unoccupied square, 1 = occupied by team 1, 2 = occupied by team 2, - = unoccupiable
                 val = 0
-                if (letter in ['a', 'c', 'e', 'g'] and num % 2 == 0) or (letter in ['b', 'd', 'f', 'h'] and num % 2 == 1):
+                if (letter in 'aceg' and num % 2 == 0) or (letter in 'bdfh' and num % 2 == 1):
                     val = '-'
-                elif (letter in ['a','c'] and num % 2 == 1) or (letter == 'b' and num % 2 == 0):
+                elif (num in [1,3] and letters.index(letter) % 2 == 0) or (num == 2 and letters.index(letter)  == 1):
                     val = 1
-                elif (letter in ['f','h'] and num % 2 == 0) or (letter == 'g' and num % 2 == 1):
+                elif (num in [6,8] and letters.index(letter) % 2 == 1) or (num == 7 and letters.index(letter)  % 2 == 0):
                     val = 2
                 self.board[key] = val
 
     def display(self):
         print('  ___________________')
         print(' |                   |')
-        for letter in ['h','g','f','e','d','c','b','a']:
-            print(letter, end = '|  ')
-            for num in range(1, 9):
+        #print nums backwards to build board top down
+        for num in '87654321':
+            print(num, end = '|  ')
+            for letter in 'abcdefgh':
                 key = '{0}{1}'.format(letter, num)
                 print(self.board[key], end = ' ')
             print(' |')
         print(' |___________________|')
-        print('    1 2 3 4 5 6 7 8')
+        print('    a b c d e f g h')
 
 board = Board()
 board.display()
-
