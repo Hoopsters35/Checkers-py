@@ -33,6 +33,10 @@ class Board:
 
     #updates occupied and unoccupied squre sets
     def updateboard(self):
+        #must reset each set before updating
+        self.squares1 = set()
+        self.squares2 = set()
+        self.opensquares = set()
         for square in self.validsquares:
             if self.board[square] ==  '1':
                 self.squares1.add(square)
