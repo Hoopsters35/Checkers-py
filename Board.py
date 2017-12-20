@@ -5,6 +5,7 @@ class Board:
         self.validsquares = set()
         self.squares1 = set()
         self.squares2 = set()
+        self.opensquares = set()
 
         #create board
         letters = 'abcdefgh'
@@ -27,12 +28,19 @@ class Board:
             if self.board[key] != '-':
                 self.validsquares.add(key)
 
-        #populate squares1 and squares2
+        #populates initial occupied and unoccupied square sets
+        self.updateboard()
+
+    #updates occupied and unoccupied squre sets
+    def updateboard(self):
         for square in self.board.keys():
             if self.board[square] ==  '1':
                 self.squares1.add(square)
             elif self.board[square] == '2':
                 self.squares2.add(square)
+            elif self.board[square] == '0':
+                self.opensquares.add(square)
+
 
     def display1(self):
         print('  ___________________')
@@ -66,3 +74,4 @@ if __name__ == '__main__':
     board.display2()
     print(board.squares1)
     print(board.squares2)
+    print(board.opensquares)
