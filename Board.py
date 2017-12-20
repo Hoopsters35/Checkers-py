@@ -1,6 +1,7 @@
-from Piece import Piece
+#from Piece import Piece
 class Board:
     def __init__(self):
+        #create board
         self.board = {}
         letters = 'abcdefgh'
         for letter in letters:
@@ -16,6 +17,12 @@ class Board:
                 elif (num in [6,8] and letters.index(letter) % 2 == 1) or (num == 7 and letters.index(letter)  % 2 == 0):
                     val = '2'
                 self.board[key] = val
+
+        self.validsquares = set()
+        #define validsquares
+        for key in self.board.keys():
+            if self.board[key] != '-':
+                self.validsquares.add(key)
 
     def display1(self):
         print('  ___________________')
