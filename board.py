@@ -181,5 +181,7 @@ if __name__ == '__main__':
     print('c3', board.possiblemoves('c3'))
     print('b6', board.possiblemoves('b6'))
     print('h6', board.possiblemoves('h6'))
-    l = 'abcdefgh'
-    print(l[l.index('f'):l.index('c')])
+    l = [1, 2, 3, 4, 5, 6, 7, 8]
+    n = {1, 3, 5, 7, 9}
+    for i in [x for x in l if x in n]:
+        print(i)

@@ -5,7 +5,7 @@ t1 = True
 
 moveregex = re.compile('^([a-h][1-8]) ([a-h][1-8])$')
 
-while board.hasmove(t1):
+while True #board.hasmove(t1):
     if t1:
         board.display1()
         print('Team 1 to move.')
