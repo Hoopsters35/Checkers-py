@@ -79,3 +79,4 @@ if __name__ == '__main__':
     print(board.squares1)
     print(board.squares2)
     print(board.opensquares)
+    inp = 'helper'
