@@ -164,9 +164,9 @@ class Board:
             else:
                 newl = letters[letters.index(end[0]):letters.index(start[0])][1]
             if numbers.index(start[0]) < numbers.index(end[0]):
-                newn = numbers[numbers.index(start[0]):numbers.index(end[0])][1]
+                newn = numbers[numbers.index(start[1]):numbers.index(end[1])][1]
             else:
-                newn = numbers[numbers.index(end[0]):numbers.index(start[0])][1]
+                newn = numbers[numbers.index(end[1]):numbers.index(start[1])][1]
             self.board[sq.format(newl, newn)] = '0'
 
         self.updateboard()
