@@ -86,7 +86,7 @@ class Board:
 
     #TODO make hasmove - takes bool for team, returns bool for if that team has a move
 
-    #TODO make possiblemoves - takes position id, returns set of possible moves for that piece
+    #make possiblemoves - takes position id, returns set of possible moves for that piece
     def possiblemoves(self, id):
         moves = set()
         letters = 'abcdefgh'
@@ -140,6 +140,39 @@ class Board:
         return moves
 
     #TODO make move - takes in piece position and new piece position
+    def move(self, start, end):
+        letters = 'abcefgh'
+        numbers = '12345678'
+        #regular move
+        if abs(int(end[1]) - int(start[1])) == 1:
+            tmp = self.board[end]
+            self.board[end] = self.board[start]
+            self.board[start] = '0'
+            self.board[end].move(end)
+        #code for capture
+        elif abs(int(end[1]) - int(start[1])) == 2:
+            tmp = self.board[end]
+            self.board[end] = self.board[start]
+            self.board[start] = '0'
+            self.board[end].move(end)
+            #get rid of the piece in middle
+            sq = '{0}{1}'
+            newl = ''
+            newn = ''
+            if letters.index(start[0]) < letters.index(end[0]):
+                newl = letters[letters.index(start[0]):letters.index(end[0])][1]
+            else:
+                newl = letters[letters.index(end[0]):letters.index(start[0])][1]
+            if numbers.index(start[0]) < numbers.index(end[0]):
+                newn = numbers[numbers.index(start[0]):numbers.index(end[0])][1]
+            else:
+                newn = numbers[numbers.index(end[0]):numbers.index(start[0])][1]
+            self.board[sq.format(newl, newn)] = '0'
+
+        self.updateboard()
+        #TODO code for multicapture
+
+
 if __name__ == '__main__':
     board = Board()
     board.display1()
@@ -148,3 +181,5 @@ if __name__ == '__main__':
     print('c3', board.possiblemoves('c3'))
     print('b6', board.possiblemoves('b6'))
     print('h6', board.possiblemoves('h6'))
+    l = 'abcdefgh'
+    print(l[l.index('f'):l.index('c')])
