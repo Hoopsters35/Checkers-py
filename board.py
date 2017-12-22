@@ -91,53 +91,51 @@ class Board:
         moves = set()
         letters = 'abcdefgh'
         numbers = '12345678'
-        #if team(find team of piece) or king(if piece is kinged):
         sq = '{0}{1}'
 
-        newl = letters[letters.index(id[0]) + 1]
-        newn = numbers[numbers.index(id[1]) + 1]
-        if sq.format(newl, newn) in self.opensquares:
-            moves.add(sq.format(newl, newn))
-        elif sq.format(newl, newn) in self.squares2:
-            newl = letters[letters.index(id[0]) + 2]
-            newn = numbers[numbers.index(id[1]) + 2]
-            if sq.format(newl, newn) in self.opensquares:
-                moves.add(sq.format(newl, newn))
-
-        if letters.index(id[0]) - 1 >= 0:
-            newl = letters[letters.index(id[0]) - 1]
+        if self.board[id].team == True or self.board[id].king == True:
+            newl = letters[letters.index(id[0]) + 1]
             newn = numbers[numbers.index(id[1]) + 1]
             if sq.format(newl, newn) in self.opensquares:
                 moves.add(sq.format(newl, newn))
-            elif sq.format(newl, newn) in self.squares2 and letters.index(id[0]) - 2 >= 0:
-                newl = letters[letters.index(id[0]) - 2]
+            elif sq.format(newl, newn) in self.squares2:
+                newl = letters[letters.index(id[0]) + 2]
                 newn = numbers[numbers.index(id[1]) + 2]
                 if sq.format(newl, newn) in self.opensquares:
                     moves.add(sq.format(newl, newn))
-        #TEMPORARY RETURN UNTIL ABLE TO FIND TEAM
-        return moves
-        #if team2 or king:
-        if numbers.index(id[1]) - 1 >= 0:
-            newl = letters[letters.index(id[0]) + 1]
-            newn = numbers[numbers.index(id[1]) - 1]
-            if sq.format(newl, newn) in self.opensquares:
-                moves.add(sq.format(newl, newn))
-            elif sq.format(newl, newn) in self.squares2 and numbers.index(id[1]) - 2 >= 0:
-                newl = letters[letters.index(id[0]) + 2]
-                newn = numbers[numbers.index(id[1]) - 2]
-                if sq.format(newl, newn) in self.opensquares:
-                    moves.add(sq.format(newl, newn))
 
-        if letters.index(id[0]) - 1 >= 0 and numbers.index(id[1]) - 1 >= 0:
-            newl = letters[letters.index(id[0]) - 1]
-            newn = numbers[numbers.index(id[1]) - 1]
-            if sq.format(newl, newn) in self.opensquares:
-                moves.add(sq.format(newl, newn))
-            elif sq.format(newl, newn) in self.squares2 and letters.index(id[0]) - 2 >= 0 and numbers.index(id[1]) - 2 >= 0:
-                newl = letters[letters.index(id[0]) - 2]
-                newn = numbers[numbers.index(id[1]) - 2]
+            if letters.index(id[0]) - 1 >= 0 and numbers.index(id[1]) + 1 <= 7:
+                newl = letters[letters.index(id[0]) - 1]
+                newn = numbers[numbers.index(id[1]) + 1]
                 if sq.format(newl, newn) in self.opensquares:
                     moves.add(sq.format(newl, newn))
+                elif sq.format(newl, newn) in self.squares2 and letters.index(id[0]) - 2 >= 0 and numbers.index(id[1]) + 2 <= 7:
+                    newl = letters[letters.index(id[0]) - 2]
+                    newn = numbers[numbers.index(id[1]) + 2]
+                    if sq.format(newl, newn) in self.opensquares:
+                        moves.add(sq.format(newl, newn))
+        if self.board[id].team == False or self.board[id].king == True:
+            if numbers.index(id[1]) - 1 >= 0 and letters.index(id[0]) + 1 <= 7:
+                newl = letters[letters.index(id[0]) + 1]
+                newn = numbers[numbers.index(id[1]) - 1]
+                if sq.format(newl, newn) in self.opensquares:
+                    moves.add(sq.format(newl, newn))
+                elif sq.format(newl, newn) in self.squares2 and numbers.index(id[1]) - 2 >= 0 and letters.index(id[0]) + 2 <= 7:
+                    newl = letters[letters.index(id[0]) + 2]
+                    newn = numbers[numbers.index(id[1]) - 2]
+                    if sq.format(newl, newn) in self.opensquares:
+                        moves.add(sq.format(newl, newn))
+
+            if letters.index(id[0]) - 1 >= 0 and numbers.index(id[1]) - 1 >= 0:
+                newl = letters[letters.index(id[0]) - 1]
+                newn = numbers[numbers.index(id[1]) - 1]
+                if sq.format(newl, newn) in self.opensquares:
+                    moves.add(sq.format(newl, newn))
+                elif sq.format(newl, newn) in self.squares2 and letters.index(id[0]) - 2 >= 0 and numbers.index(id[1]) - 2 >= 0:
+                    newl = letters[letters.index(id[0]) - 2]
+                    newn = numbers[numbers.index(id[1]) - 2]
+                    if sq.format(newl, newn) in self.opensquares:
+                        moves.add(sq.format(newl, newn))
 
         return moves
 
@@ -146,4 +144,7 @@ if __name__ == '__main__':
     board = Board()
     board.display1()
     board.display2()
-    print(board.possiblemoves('a3'))
+    print('a3', board.possiblemoves('a3'))
+    print('c3', board.possiblemoves('c3'))
+    print('b6', board.possiblemoves('b6'))
+    print('h6', board.possiblemoves('h6'))
