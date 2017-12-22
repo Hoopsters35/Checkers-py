@@ -25,4 +25,4 @@ while board.hasmove(t1):
         board.move(moveregex.group(1), moveregex.group(2))
         t1 = !t1
 #TODO display winner
-
+#TODO get rid of repetition by using .format
