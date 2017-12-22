@@ -18,9 +18,9 @@ class Board:
                 if (letter in 'aceg' and num % 2 == 0) or (letter in 'bdfh' and num % 2 == 1):
                     val = '-'
                 elif (num in [1,3] and letters.index(letter) % 2 == 0) or (num == 2 and letters.index(letter) % 2 == 1):
-                    val = '1'
+                    val = piece.Piece(True, key)
                 elif (num in [6,8] and letters.index(letter) % 2 == 1) or (num == 7 and letters.index(letter)  % 2 == 0):
-                    val = '2'
+                    val = piece.Piece(False, key)
                 self.board[key] = val
 
         #define validsquares
@@ -38,12 +38,14 @@ class Board:
         self.squares2 = set()
         self.opensquares = set()
         for square in self.validsquares:
-            if self.board[square] ==  '1':
-                self.squares1.add(square)
-            elif self.board[square] == '2':
-                self.squares2.add(square)
+            if self.board[square] == '-':
+                pass
             elif self.board[square] == '0':
                 self.opensquares.add(square)
+            elif self.board[square].team == True:
+                self.squares1.add(square)
+            elif self.board[square].team == False:
+                self.squares2.add(square)
 
 
     def display1(self):
@@ -54,7 +56,12 @@ class Board:
             print(num, end = '|  ')
             for letter in 'abcdefgh':
                 key = '{0}{1}'.format(letter, num)
-                print(self.board[key], end = ' ')
+                if self.board[key] == '-' or self.board[key] == '0':
+                    print(self.board[key], end = ' ')
+                elif self.board[key].team == True:
+                    print('1', end = ' ')
+                elif self.board[key].team == False:
+                    print('2', end = ' ')
             print(' |')
         print(' |___________________|')
         print('    a b c d e f g h')
@@ -67,7 +74,12 @@ class Board:
             print(num, end = '|  ')
             for letter in 'hgfedcba':
                 key = '{0}{1}'.format(letter, num)
-                print(self.board[key], end = ' ')
+                if self.board[key] == '-' or self.board[key] == '0':
+                    print(self.board[key], end = ' ')
+                elif self.board[key].team == True:
+                    print('1', end = ' ')
+                elif self.board[key].team == False:
+                    print('2', end = ' ')
             print(' |')
         print(' |___________________|')
         print('    h g f e d c b a')
@@ -132,5 +144,6 @@ class Board:
     #TODO make move - takes in piece position and new piece position
 if __name__ == '__main__':
     board = Board()
+    board.display1()
     board.display2()
     print(board.possiblemoves('a3'))
