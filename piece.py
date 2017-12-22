@@ -1,4 +1,4 @@
-import Board
+import board
 class Piece:
     def __init__(self, team, position):
         self.team = team
