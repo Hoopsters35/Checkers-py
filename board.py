@@ -72,6 +72,11 @@ class Board:
         print(' |___________________|')
         print('    h g f e d c b a')
 
+    #TODO make hasmove - takes bool for team, returns bool for if that team has a move
+
+    #TODO make possiblemoves - takes position id, returns set of possible moves for that piece
+
+    #TODO make move - takes in piece position and new piece position
 if __name__ == '__main__':
     board = Board()
     board.display1()
@@ -79,4 +84,3 @@ if __name__ == '__main__':
     print(board.squares1)
     print(board.squares2)
     print(board.opensquares)
-    inp = 'helper'
