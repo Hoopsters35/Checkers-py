@@ -75,12 +75,38 @@ class Board:
     #TODO make hasmove - takes bool for team, returns bool for if that team has a move
 
     #TODO make possiblemoves - takes position id, returns set of possible moves for that piece
+    def possiblemoves(self, id):
+        moves = set()
+        letters = 'abcdefgh'
+        numbers = '12345678'
+        #if team(find team of piece):
+        sq = '{0}{1}'
+
+        newl = letters[letters.index(id[0]) + 1]
+        newn = numbers[numbers.index(id[1]) + 1]
+        if sq.format(newl, newn) in self.opensquares:
+            moves.add(sq.format(newl, newn))
+        elif sq.format(newl, newn) in self.squares2:
+            newl = letters[letters.index(id[0]) + 2]
+            newn = numbers[numbers.index(id[1]) + 2]
+            if sq.format(newl, newn) in self.opensquares:
+                moves.add(sq.format(newl, newn))
+
+        if letters.index(id[0]) - 1 >= 0:
+            newl = letters[letters.index(id[0]) - 1]
+            newn = numbers[numbers.index(id[1]) + 1]
+            if sq.format(newl, newn) in self.opensquares:
+                moves.add(sq.format(newl, newn))
+            elif sq.format(newl, newn) in self.squares2 and letters.index(id[0]) - 2 >= 0:
+                newl = letters[letters.index(id[0]) - 2]
+                newn = numbers[numbers.index(id[1]) + 2]
+                if sq.format(newl, newn) in self.opensquares:
+                    moves.add(sq.format(newl, newn))
+
+        return moves
 
     #TODO make move - takes in piece position and new piece position
 if __name__ == '__main__':
     board = Board()
     board.display1()
-    board.display2()
-    print(board.squares1)
-    print(board.squares2)
-    print(board.opensquares)
+    print(board.possiblemoves('a3'))
