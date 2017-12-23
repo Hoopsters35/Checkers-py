@@ -92,7 +92,8 @@ class Board:
         letters = 'abcdefgh'
         numbers = '12345678'
         sq = '{0}{1}'
-
+       #TODO currently king will not work, as checking for other team is hard coded
+        #move from team 1 to team 2 side
         if self.board[id].team == True or self.board[id].king == True:
             newl = letters[letters.index(id[0]) + 1]
             newn = numbers[numbers.index(id[1]) + 1]
@@ -114,13 +115,15 @@ class Board:
                     newn = numbers[numbers.index(id[1]) + 2]
                     if sq.format(newl, newn) in self.opensquares:
                         moves.add(sq.format(newl, newn))
+
+        #move from team 2 to team 1 side
         if self.board[id].team == False or self.board[id].king == True:
             if numbers.index(id[1]) - 1 >= 0 and letters.index(id[0]) + 1 <= 7:
                 newl = letters[letters.index(id[0]) + 1]
                 newn = numbers[numbers.index(id[1]) - 1]
                 if sq.format(newl, newn) in self.opensquares:
                     moves.add(sq.format(newl, newn))
-                elif sq.format(newl, newn) in self.squares2 and numbers.index(id[1]) - 2 >= 0 and letters.index(id[0]) + 2 <= 7:
+                elif sq.format(newl, newn) in self.squares1 and numbers.index(id[1]) - 2 >= 0 and letters.index(id[0]) + 2 <= 7:
                     newl = letters[letters.index(id[0]) + 2]
                     newn = numbers[numbers.index(id[1]) - 2]
                     if sq.format(newl, newn) in self.opensquares:
@@ -131,7 +134,7 @@ class Board:
                 newn = numbers[numbers.index(id[1]) - 1]
                 if sq.format(newl, newn) in self.opensquares:
                     moves.add(sq.format(newl, newn))
-                elif sq.format(newl, newn) in self.squares2 and letters.index(id[0]) - 2 >= 0 and numbers.index(id[1]) - 2 >= 0:
+                elif sq.format(newl, newn) in self.squares1 and letters.index(id[0]) - 2 >= 0 and numbers.index(id[1]) - 2 >= 0:
                     newl = letters[letters.index(id[0]) - 2]
                     newn = numbers[numbers.index(id[1]) - 2]
                     if sq.format(newl, newn) in self.opensquares:
@@ -141,7 +144,7 @@ class Board:
 
     #TODO make move - takes in piece position and new piece position
     def move(self, start, end):
-        letters = 'abcefgh'
+        letters = 'abcdefgh'
         numbers = '12345678'
         #regular move
         if abs(int(end[1]) - int(start[1])) == 1:
@@ -163,7 +166,7 @@ class Board:
                 newl = letters[letters.index(start[0]):letters.index(end[0])][1]
             else:
                 newl = letters[letters.index(end[0]):letters.index(start[0])][1]
-            if numbers.index(start[0]) < numbers.index(end[0]):
+            if numbers.index(start[1]) < numbers.index(end[1]):
                 newn = numbers[numbers.index(start[1]):numbers.index(end[1])][1]
             else:
                 newn = numbers[numbers.index(end[1]):numbers.index(start[1])][1]
