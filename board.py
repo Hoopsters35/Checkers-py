@@ -98,7 +98,7 @@ class Board:
             if self.squares2 == set():
                 return False
             #check team2 possible moves
-            for piece in [squares for squares in self.validsquares if squares in self.squares1]:
+            for piece in [squares for squares in self.validsquares if squares in self.squares2]:
                 if not self.possiblemoves(piece) == set():
                     return True
         return False
