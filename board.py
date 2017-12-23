@@ -3,8 +3,7 @@ class Board:
     def __init__(self):
         self.board = {}
         self.validsquares = []
-        self.squares1 = set()
-        self.squares2 = set()
+        self.squares = {True : set(), False = set()}
         self.opensquares = set()
 
         #create board
@@ -34,8 +33,8 @@ class Board:
     #updates occupied and unoccupied squre sets
     def updateboard(self):
         #must reset each set before updating
-        self.squares1 = set()
-        self.squares2 = set()
+        self.squares[True] = set()
+        self.squares[False] = set()
         self.opensquares = set()
         for square in self.validsquares:
             if self.board[square] == '-':
@@ -43,9 +42,9 @@ class Board:
             elif self.board[square] == '0':
                 self.opensquares.add(square)
             elif self.board[square].team == True:
-                self.squares1.add(square)
+                self.squares[True].add(square)
             elif self.board[square].team == False:
-                self.squares2.add(square)
+                self.squares[False].add(square)
 
 
     def display1(self):
@@ -87,18 +86,18 @@ class Board:
     #hasmove - takes bool for team, returns bool for if that team has a move
     def hasmove(self, team):
         if team:
-            if self.squares1 == set():
+            if self.squares[True] == set():
                 return False
             #check team1 possible moves
-            for piece in [squares for squares in self.validsquares if squares in self.squares1]:
+            for piece in [squares for squares in self.validsquares if squares in self.squares[True]]:
                 if not self.possiblemoves(piece) == set():
                     return True
 
         elif not team:
-            if self.squares2 == set():
+            if self.squares[False] == set():
                 return False
             #check team2 possible moves
-            for piece in [squares for squares in self.validsquares if squares in self.squares2]:
+            for piece in [squares for squares in self.validsquares if squares in self.squares[False]]:
                 if not self.possiblemoves(piece) == set():
                     return True
         return False
@@ -117,7 +116,7 @@ class Board:
                 newn = numbers[numbers.index(id[1]) + 1]
                 if sq.format(newl, newn) in self.opensquares:
                     moves.add(sq.format(newl, newn))
-                elif sq.format(newl, newn) in self.squares2:
+                elif sq.format(newl, newn) in self.squares[False]:
                     if letters.index(id[0]) + 2 <= 7 and numbers.index(id[1]) + 2 <= 7:
                         newl = letters[letters.index(id[0]) + 2]
                         newn = numbers[numbers.index(id[1]) + 2]
@@ -129,7 +128,7 @@ class Board:
                 newn = numbers[numbers.index(id[1]) + 1]
                 if sq.format(newl, newn) in self.opensquares:
                     moves.add(sq.format(newl, newn))
-                elif sq.format(newl, newn) in self.squares2:
+                elif sq.format(newl, newn) in self.squares[False]:
                     if letters.index(id[0]) - 2 >= 0 and numbers.index(id[1]) + 2 <= 7:
                         newl = letters[letters.index(id[0]) - 2]
                         newn = numbers[numbers.index(id[1]) + 2]
@@ -143,7 +142,7 @@ class Board:
                 newn = numbers[numbers.index(id[1]) - 1]
                 if sq.format(newl, newn) in self.opensquares:
                     moves.add(sq.format(newl, newn))
-                elif sq.format(newl, newn) in self.squares1:
+                elif sq.format(newl, newn) in self.squares[True]:
                     if numbers.index(id[1]) - 2 >= 0 and letters.index(id[0]) + 2 <= 7:
                         newl = letters[letters.index(id[0]) + 2]
                         newn = numbers[numbers.index(id[1]) - 2]
@@ -155,7 +154,7 @@ class Board:
                 newn = numbers[numbers.index(id[1]) - 1]
                 if sq.format(newl, newn) in self.opensquares:
                     moves.add(sq.format(newl, newn))
-                elif sq.format(newl, newn) in self.squares1:
+                elif sq.format(newl, newn) in self.squares[True]:
                     if letters.index(id[0]) - 2 >= 0 and numbers.index(id[1]) - 2 >= 0:
                         newl = letters[letters.index(id[0]) - 2]
                         newn = numbers[numbers.index(id[1]) - 2]
@@ -200,9 +199,9 @@ class Board:
 
         #check per team if they are on final square
     def checkking(self, id):
-        if id in self.squares1 and id[1] == '8':
+        if id in self.squares[True] and id[1] == '8':
             self.board[id].king()
-        elif id in self.squares2 and id[1] == '1':
+        elif id in self.squares[False] and id[1] == '1':
             self.board[id].king()
 
 
