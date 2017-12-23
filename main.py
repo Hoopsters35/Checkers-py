@@ -7,7 +7,7 @@ moveregex = re.compile('^([a-h][1-8]) ([a-h][1-8])$')
 
 while board.hasmove(t1):
     if t1:
-        board.display1()
+        board.display(True)
         print('Team 1 to move.')
         inp = input('Enter move [ie. a3 b4] ')
         cmd = moveregex.match(inp)
@@ -24,7 +24,7 @@ while board.hasmove(t1):
         board.move(cmd.group(1), cmd.group(2))
         t1 = not t1
     else:
-        board.display2()
+        board.display(False)
         print('Team 2 to move.')
         inp = input('Enter move [ie. a3 b4] ')
         cmd = moveregex.match(inp)

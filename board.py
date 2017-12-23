@@ -47,41 +47,42 @@ class Board:
                 self.squares[False].add(square)
 
 
-    def display1(self):
-        print('  ___________________')
-        print(' |                   |')
-        #print nums backwards to build board top down
-        for num in '87654321':
-            print(num, end = '|  ')
-            for letter in 'abcdefgh':
-                key = '{0}{1}'.format(letter, num)
-                if self.board[key] == '-' or self.board[key] == '0':
-                    print(self.board[key], end = ' ')
-                elif self.board[key].team == True:
-                    print('1', end = ' ')
-                elif self.board[key].team == False:
-                    print('2', end = ' ')
-            print(' |')
-        print(' |___________________|')
-        print('    a b c d e f g h')
+    def display(self, team):
+        if team == True:
+            print('  ___________________')
+            print(' |                   |')
+            #print nums backwards to build board top down
+            for num in '87654321':
+                print(num, end = '|  ')
+                for letter in 'abcdefgh':
+                    key = '{0}{1}'.format(letter, num)
+                    if self.board[key] == '-' or self.board[key] == '0':
+                        print(self.board[key], end = ' ')
+                    elif self.board[key].team == True:
+                        print('1', end = ' ')
+                    elif self.board[key].team == False:
+                        print('2', end = ' ')
+                print(' |')
+            print(' |___________________|')
+            print('    a b c d e f g h')
 
-    def display2(self):
-        print('  ___________________')
-        print(' |                   |')
-        #print nums backwards to build board top down
-        for num in '12345678':
-            print(num, end = '|  ')
-            for letter in 'hgfedcba':
-                key = '{0}{1}'.format(letter, num)
-                if self.board[key] == '-' or self.board[key] == '0':
-                    print(self.board[key], end = ' ')
-                elif self.board[key].team == True:
-                    print('1', end = ' ')
-                elif self.board[key].team == False:
-                    print('2', end = ' ')
-            print(' |')
-        print(' |___________________|')
-        print('    h g f e d c b a')
+        elif team == False:
+            print('  ___________________')
+            print(' |                   |')
+            #print nums backwards to build board top down
+            for num in '12345678':
+                print(num, end = '|  ')
+                for letter in 'hgfedcba':
+                    key = '{0}{1}'.format(letter, num)
+                    if self.board[key] == '-' or self.board[key] == '0':
+                        print(self.board[key], end = ' ')
+                    elif self.board[key].team == True:
+                        print('1', end = ' ')
+                    elif self.board[key].team == False:
+                        print('2', end = ' ')
+                print(' |')
+            print(' |___________________|')
+            print('    h g f e d c b a')
 
     #hasmove - takes bool for team, returns bool for if that team has a move
     def hasmove(self, team):
