@@ -84,7 +84,24 @@ class Board:
         print(' |___________________|')
         print('    h g f e d c b a')
 
-    #TODO make hasmove - takes bool for team, returns bool for if that team has a move
+    #hasmove - takes bool for team, returns bool for if that team has a move
+    def hasmove(self, team):
+        if team:
+            if self.squares1 == set():
+                return False
+            #check team1 possible moves
+            for piece in [squares for squares in self.validsquares if squares in self.squares1]:
+                if not self.possiblemoves(piece) == set():
+                    return True
+
+        elif not team:
+            if self.squares2 == set():
+                return False
+            #check team2 possible moves
+            for piece in [squares for squares in self.validsquares if squares in self.squares1]:
+                if not self.possiblemoves(piece) == set():
+                    return True
+        return False
 
     #make possiblemoves - takes position id, returns set of possible moves for that piece
     def possiblemoves(self, id):
@@ -95,7 +112,7 @@ class Board:
        #TODO currently king will not work, as checking for other team is hard coded
         #move from team 1 to team 2 side
         if self.board[id].team == True or self.board[id].king == True:
-            newl = letters[letters.index(id[0]) + 1]
+            newl = letters[letters.index(id[0]) + 1] #forces out of bounds
             newn = numbers[numbers.index(id[1]) + 1]
             if sq.format(newl, newn) in self.opensquares:
                 moves.add(sq.format(newl, newn))
@@ -142,7 +159,7 @@ class Board:
 
         return moves
 
-    #TODO make move - takes in piece position and new piece position
+    #make move - takes in piece position and new piece position
     def move(self, start, end):
         letters = 'abcdefgh'
         numbers = '12345678'
@@ -176,8 +193,8 @@ class Board:
         self.updateboard()
         #TODO code for multicapture
 
+        #check per team if they are on final square
     def checkking(self, id):
-        #TODO check per team if they are on final square
         if id in self.squares1 and id[1] == '8':
             self.board[id].king()
         elif id in self.squares2 and id[1] == '1':

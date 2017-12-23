@@ -5,7 +5,7 @@ t1 = True
 
 moveregex = re.compile('^([a-h][1-8]) ([a-h][1-8])$')
 
-while True: #board.hasmove(t1):
+while board.hasmove(t1):
     if t1:
         board.display1()
         print('Team 1 to move.')
@@ -41,4 +41,8 @@ while True: #board.hasmove(t1):
         board.move(cmd.group(1), cmd.group(2))
         t1 = not t1
 #TODO display winner
+if t1 == True:
+    print('Congratulations team 2! You win!')
+else:
+    print('Congratulations team 1! You win!')
 #TODO get rid of repetition by using .format
