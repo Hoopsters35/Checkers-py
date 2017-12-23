@@ -3,7 +3,6 @@ class Piece:
         self.team = team
         self.position = position
         self.king = False
-        self.pos_moves = set()
 
     def move (self, newpos):
         if newpos in self.pos_moves:
