@@ -208,5 +208,5 @@ class Board:
 
 if __name__ == '__main__':
     board = Board()
-    board.display1()
-    board.display2()
+    board.display(1)
+    board.display(0)
