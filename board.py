@@ -3,7 +3,7 @@ class Board:
     def __init__(self):
         self.board = {}
         self.validsquares = []
-        self.squares = {True : set(), False = set()}
+        self.squares = {True : set(), False : set()}
         self.opensquares = set()
 
         #create board
