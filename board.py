@@ -172,8 +172,16 @@ class Board:
                 newn = numbers[numbers.index(end[1]):numbers.index(start[1])][1]
             self.board[sq.format(newl, newn)] = '0'
 
+        self.checkking(end)
         self.updateboard()
         #TODO code for multicapture
+
+    def checkking(self, id):
+        #TODO check per team if they are on final square
+        if id in self.squares1 and id[1] == '8':
+            self.board[id].king()
+        elif id in self.squares2 and id[1] == '1':
+            self.board[id].king()
 
 
 if __name__ == '__main__':
