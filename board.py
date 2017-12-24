@@ -99,7 +99,7 @@ class Board:
         letters = 'abcdefgh'
         numbers = '12345678'
         sq = '{0}{1}'
-       #TODO currently king will not work, as checking for other team is hard coded
+
         #move from team 1 to team 2 side
         if self.board[id].team == True or self.board[id].king == True:
             if letters.index(id[0]) + 1 <= 7 and numbers.index(id[1]) + 1 <= 7:
