@@ -7,6 +7,6 @@ class Piece:
     def move (self, newpos):
         self.position = newpos
 
-    def king(self):
+    def kingme(self):
         self.king = True
 

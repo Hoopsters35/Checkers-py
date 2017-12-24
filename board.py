@@ -107,7 +107,7 @@ class Board:
                 newn = numbers[numbers.index(id[1]) + 1]
                 if sq.format(newl, newn) in self.opensquares:
                     moves.add(sq.format(newl, newn))
-                elif sq.format(newl, newn) in self.squares[False]:
+                elif sq.format(newl, newn) in self.squares[not self.board[id].team]:
                     if letters.index(id[0]) + 2 <= 7 and numbers.index(id[1]) + 2 <= 7:
                         newl = letters[letters.index(id[0]) + 2]
                         newn = numbers[numbers.index(id[1]) + 2]
@@ -119,7 +119,7 @@ class Board:
                 newn = numbers[numbers.index(id[1]) + 1]
                 if sq.format(newl, newn) in self.opensquares:
                     moves.add(sq.format(newl, newn))
-                elif sq.format(newl, newn) in self.squares[False]:
+                elif sq.format(newl, newn) in self.squares[not self.board[id].team]:
                     if letters.index(id[0]) - 2 >= 0 and numbers.index(id[1]) + 2 <= 7:
                         newl = letters[letters.index(id[0]) - 2]
                         newn = numbers[numbers.index(id[1]) + 2]
@@ -133,7 +133,7 @@ class Board:
                 newn = numbers[numbers.index(id[1]) - 1]
                 if sq.format(newl, newn) in self.opensquares:
                     moves.add(sq.format(newl, newn))
-                elif sq.format(newl, newn) in self.squares[True]:
+                elif sq.format(newl, newn) in self.squares[not self.board[id].team]:
                     if numbers.index(id[1]) - 2 >= 0 and letters.index(id[0]) + 2 <= 7:
                         newl = letters[letters.index(id[0]) + 2]
                         newn = numbers[numbers.index(id[1]) - 2]
@@ -145,7 +145,7 @@ class Board:
                 newn = numbers[numbers.index(id[1]) - 1]
                 if sq.format(newl, newn) in self.opensquares:
                     moves.add(sq.format(newl, newn))
-                elif sq.format(newl, newn) in self.squares[True]:
+                elif sq.format(newl, newn) in self.squares[not self.board[id].team]:
                     if letters.index(id[0]) - 2 >= 0 and numbers.index(id[1]) - 2 >= 0:
                         newl = letters[letters.index(id[0]) - 2]
                         newn = numbers[numbers.index(id[1]) - 2]
@@ -190,10 +190,10 @@ class Board:
 
         #check per team if they are on final square
     def checkking(self, id):
-        if id in self.squares[True] and id[1] == '8':
-            self.board[id].king()
-        elif id in self.squares[False] and id[1] == '1':
-            self.board[id].king()
+        if self.board[id].team == True and id[1] == '8':
+            self.board[id].kingme()
+        elif self.board[id].team == False and id[1] == '1':
+            self.board[id].kingme()
 
 
 if __name__ == '__main__':
