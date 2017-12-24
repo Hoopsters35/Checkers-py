@@ -86,21 +86,11 @@ class Board:
 
     #hasmove - takes bool for team, returns bool for if that team has a move
     def hasmove(self, team):
-        if team:
-            if self.squares[True] == set():
-                return False
-            #check team1 possible moves
-            for piece in [squares for squares in self.validsquares if squares in self.squares[True]]:
-                if not self.possiblemoves(piece) == set():
-                    return True
-
-        elif not team:
-            if self.squares[False] == set():
-                return False
-            #check team2 possible moves
-            for piece in [squares for squares in self.validsquares if squares in self.squares[False]]:
-                if not self.possiblemoves(piece) == set():
-                    return True
+        if self.squares[team] == set():
+            return False
+        for piece in [squares for squares in self.validsquares if squares in self.squares[team]]:
+            if not self.possiblemoves(piece) == set():
+                return True
         return False
 
     #make possiblemoves - takes position id, returns set of possible moves for that piece
