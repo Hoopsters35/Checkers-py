@@ -89,13 +89,13 @@ class Board:
         if self.squares[team] == set():
             return False
         for piece in [squares for squares in self.validsquares if squares in self.squares[team]]:
-            if not self.possiblemoves(piece) == set():
+            if not self.possiblemoves(piece) == {}:
                 return True
         return False
 
     #make possiblemoves - takes position id, returns set of possible moves for that piece
     def possiblemoves(self, id):
-        moves = set()
+        moves = {}
         letters = 'abcdefgh'
         numbers = '12345678'
         sq = '{0}{1}'
@@ -106,25 +106,25 @@ class Board:
                 newl = letters[letters.index(id[0]) + 1]
                 newn = numbers[numbers.index(id[1]) + 1]
                 if sq.format(newl, newn) in self.opensquares:
-                    moves.add(sq.format(newl, newn))
+                    moves[sq.format(newl, newn)] = False
                 elif sq.format(newl, newn) in self.squares[not self.board[id].team]:
                     if letters.index(id[0]) + 2 <= 7 and numbers.index(id[1]) + 2 <= 7:
                         newl = letters[letters.index(id[0]) + 2]
                         newn = numbers[numbers.index(id[1]) + 2]
                         if sq.format(newl, newn) in self.opensquares:
-                            moves.add(sq.format(newl, newn))
+                            moves[sq.format(newl, newn)] = True
 
             if letters.index(id[0]) - 1 >= 0 and numbers.index(id[1]) + 1 <= 7:
                 newl = letters[letters.index(id[0]) - 1]
                 newn = numbers[numbers.index(id[1]) + 1]
                 if sq.format(newl, newn) in self.opensquares:
-                    moves.add(sq.format(newl, newn))
+                    moves[sq.format(newl, newn)] = False
                 elif sq.format(newl, newn) in self.squares[not self.board[id].team]:
                     if letters.index(id[0]) - 2 >= 0 and numbers.index(id[1]) + 2 <= 7:
                         newl = letters[letters.index(id[0]) - 2]
                         newn = numbers[numbers.index(id[1]) + 2]
                         if sq.format(newl, newn) in self.opensquares:
-                            moves.add(sq.format(newl, newn))
+                            moves[sq.format(newl, newn)] = True
 
         #move from team 2 to team 1 side
         if self.board[id].team == False or self.board[id].king == True:
@@ -132,25 +132,25 @@ class Board:
                 newl = letters[letters.index(id[0]) + 1]
                 newn = numbers[numbers.index(id[1]) - 1]
                 if sq.format(newl, newn) in self.opensquares:
-                    moves.add(sq.format(newl, newn))
+                    moves[sq.format(newl, newn)] = False
                 elif sq.format(newl, newn) in self.squares[not self.board[id].team]:
                     if numbers.index(id[1]) - 2 >= 0 and letters.index(id[0]) + 2 <= 7:
                         newl = letters[letters.index(id[0]) + 2]
                         newn = numbers[numbers.index(id[1]) - 2]
                         if sq.format(newl, newn) in self.opensquares:
-                            moves.add(sq.format(newl, newn))
+                            moves[sq.format(newl, newn)] = True
 
             if letters.index(id[0]) - 1 >= 0 and numbers.index(id[1]) - 1 >= 0:
                 newl = letters[letters.index(id[0]) - 1]
                 newn = numbers[numbers.index(id[1]) - 1]
                 if sq.format(newl, newn) in self.opensquares:
-                    moves.add(sq.format(newl, newn))
+                    moves[sq.format(newl, newn)] = False
                 elif sq.format(newl, newn) in self.squares[not self.board[id].team]:
                     if letters.index(id[0]) - 2 >= 0 and numbers.index(id[1]) - 2 >= 0:
                         newl = letters[letters.index(id[0]) - 2]
                         newn = numbers[numbers.index(id[1]) - 2]
                         if sq.format(newl, newn) in self.opensquares:
-                            moves.add(sq.format(newl, newn))
+                            moves[sq.format(newl, newn)] = True
 
         return moves
 
@@ -187,6 +187,7 @@ class Board:
         self.checkking(end)
         self.updateboard()
         #TODO code for multicapture
+        #make the possible moves into dictionaries with a True False on whether its a capture move
 
         #check per team if they are on final square
     def checkking(self, id):
