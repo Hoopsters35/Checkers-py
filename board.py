@@ -73,7 +73,7 @@ class Board:
             print('  ___________________')
             print(' |                   |')
             #print nums backwards to build board top down
-            for num in '12345678':
+            for num in self.numbers:
                 print(num, end = '|  ')
                 for letter in 'hgfedcba':
                     key = '{0}{1}'.format(letter, num)
@@ -99,58 +99,57 @@ class Board:
     #make possiblemoves - takes position id, returns set of possible moves for that piece
     def possiblemoves(self, id):
         moves = {}
-        numbers = '12345678'
         sq = '{0}{1}'
 
         #move from team 1 to team 2 side
         if self.board[id].team == True or self.board[id].king == True:
-            if self.letters.index(id[0]) + 1 <= 7 and numbers.index(id[1]) + 1 <= 7:
+            if self.letters.index(id[0]) + 1 <= 7 and self.numbers.index(id[1]) + 1 <= 7:
                 newl = self.letters[self.letters.index(id[0]) + 1]
-                newn = numbers[numbers.index(id[1]) + 1]
+                newn = self.numbers[self.numbers.index(id[1]) + 1]
                 if sq.format(newl, newn) in self.opensquares:
                     moves[sq.format(newl, newn)] = False
                 elif sq.format(newl, newn) in self.squares[not self.board[id].team]:
-                    if self.letters.index(id[0]) + 2 <= 7 and numbers.index(id[1]) + 2 <= 7:
+                    if self.letters.index(id[0]) + 2 <= 7 and self.numbers.index(id[1]) + 2 <= 7:
                         newl = self.letters[self.letters.index(id[0]) + 2]
-                        newn = numbers[numbers.index(id[1]) + 2]
+                        newn = self.numbers[self.numbers.index(id[1]) + 2]
                         if sq.format(newl, newn) in self.opensquares:
                             moves[sq.format(newl, newn)] = True
 
-            if self.letters.index(id[0]) - 1 >= 0 and numbers.index(id[1]) + 1 <= 7:
+            if self.letters.index(id[0]) - 1 >= 0 and self.numbers.index(id[1]) + 1 <= 7:
                 newl = self.letters[self.letters.index(id[0]) - 1]
-                newn = numbers[numbers.index(id[1]) + 1]
+                newn = self.numbers[self.numbers.index(id[1]) + 1]
                 if sq.format(newl, newn) in self.opensquares:
                     moves[sq.format(newl, newn)] = False
                 elif sq.format(newl, newn) in self.squares[not self.board[id].team]:
-                    if self.letters.index(id[0]) - 2 >= 0 and numbers.index(id[1]) + 2 <= 7:
+                    if self.letters.index(id[0]) - 2 >= 0 and self.numbers.index(id[1]) + 2 <= 7:
                         newl = self.letters[self.letters.index(id[0]) - 2]
-                        newn = numbers[numbers.index(id[1]) + 2]
+                        newn = self.numbers[self.numbers.index(id[1]) + 2]
                         if sq.format(newl, newn) in self.opensquares:
                             moves[sq.format(newl, newn)] = True
 
         #move from team 2 to team 1 side
         if self.board[id].team == False or self.board[id].king == True:
-            if numbers.index(id[1]) - 1 >= 0 and self.letters.index(id[0]) + 1 <= 7:
+            if self.numbers.index(id[1]) - 1 >= 0 and self.letters.index(id[0]) + 1 <= 7:
                 newl = self.letters[self.letters.index(id[0]) + 1]
-                newn = numbers[numbers.index(id[1]) - 1]
+                newn = self.numbers[self.numbers.index(id[1]) - 1]
                 if sq.format(newl, newn) in self.opensquares:
                     moves[sq.format(newl, newn)] = False
                 elif sq.format(newl, newn) in self.squares[not self.board[id].team]:
-                    if numbers.index(id[1]) - 2 >= 0 and self.letters.index(id[0]) + 2 <= 7:
+                    if self.numbers.index(id[1]) - 2 >= 0 and self.letters.index(id[0]) + 2 <= 7:
                         newl = self.letters[self.letters.index(id[0]) + 2]
-                        newn = numbers[numbers.index(id[1]) - 2]
+                        newn = self.numbers[self.numbers.index(id[1]) - 2]
                         if sq.format(newl, newn) in self.opensquares:
                             moves[sq.format(newl, newn)] = True
 
-            if self.letters.index(id[0]) - 1 >= 0 and numbers.index(id[1]) - 1 >= 0:
+            if self.letters.index(id[0]) - 1 >= 0 and self.numbers.index(id[1]) - 1 >= 0:
                 newl = self.letters[self.letters.index(id[0]) - 1]
-                newn = numbers[numbers.index(id[1]) - 1]
+                newn = self.numbers[self.numbers.index(id[1]) - 1]
                 if sq.format(newl, newn) in self.opensquares:
                     moves[sq.format(newl, newn)] = False
                 elif sq.format(newl, newn) in self.squares[not self.board[id].team]:
-                    if self.letters.index(id[0]) - 2 >= 0 and numbers.index(id[1]) - 2 >= 0:
+                    if self.letters.index(id[0]) - 2 >= 0 and self.numbers.index(id[1]) - 2 >= 0:
                         newl = self.letters[self.letters.index(id[0]) - 2]
-                        newn = numbers[numbers.index(id[1]) - 2]
+                        newn = self.numbers[self.numbers.index(id[1]) - 2]
                         if sq.format(newl, newn) in self.opensquares:
                             moves[sq.format(newl, newn)] = True
 
@@ -158,7 +157,6 @@ class Board:
 
     #make move - takes in piece position and new piece position
     def move(self, start, end):
-        numbers = '12345678'
         #regular move
         if abs(int(end[1]) - int(start[1])) == 1:
             tmp = self.board[end]
@@ -179,10 +177,10 @@ class Board:
                 newl = self.letters[self.letters.index(start[0]):self.letters.index(end[0])][1]
             else:
                 newl = self.letters[self.letters.index(end[0]):self.letters.index(start[0])][1]
-            if numbers.index(start[1]) < numbers.index(end[1]):
-                newn = numbers[numbers.index(start[1]):numbers.index(end[1])][1]
+            if self.numbers.index(start[1]) < self.numbers.index(end[1]):
+                newn = self.numbers[self.numbers.index(start[1]):self.numbers.index(end[1])][1]
             else:
-                newn = numbers[numbers.index(end[1]):numbers.index(start[1])][1]
+                newn = self.numbers[self.numbers.index(end[1]):self.numbers.index(start[1])][1]
             self.board[sq.format(newl, newn)] = '0'
 
         self.checkking(end)
