@@ -155,6 +155,15 @@ class Board:
 
         return moves
 
+    #take a piece, a letter index change, a number index change, return a touple of (square, piece)
+    def getrelsquare(self, piece, ac, nc):
+        if self.letters.index(piece[0]) + ac in range(8) and self.numbers.inx(piece[1]) + nc in range(8):
+            sq = '{0}{1}'
+            newl = self.letters[self.letters.index(piece[0]) + ac]
+            newn = self.numbers[self.numbers.index(piece[1]) + nc]
+            square = sq.format(newl, newn)
+            return (square, self.board[square])
+
     #make move - takes in piece position and new piece position
     def move(self, start, end):
         #regular move
@@ -198,5 +207,5 @@ class Board:
 
 if __name__ == '__main__':
     board = Board()
-    board.display(1)
-    board.display(0)
+    #board.display(1)
+    #board.display(0)
