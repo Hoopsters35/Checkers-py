@@ -99,70 +99,40 @@ class Board:
     #make possiblemoves - takes position id, returns set of possible moves for that piece
     def possiblemoves(self, id):
         moves = {}
-        sq = '{0}{1}'
 
         #move from team 1 to team 2 side
         if self.board[id].team == True or self.board[id].king == True:
-            if self.letters.index(id[0]) + 1 <= 7 and self.numbers.index(id[1]) + 1 <= 7:
-                newl = self.letters[self.letters.index(id[0]) + 1]
-                newn = self.numbers[self.numbers.index(id[1]) + 1]
-                if sq.format(newl, newn) in self.opensquares:
-                    moves[sq.format(newl, newn)] = False
-                elif sq.format(newl, newn) in self.squares[not self.board[id].team]:
-                    if self.letters.index(id[0]) + 2 <= 7 and self.numbers.index(id[1]) + 2 <= 7:
-                        newl = self.letters[self.letters.index(id[0]) + 2]
-                        newn = self.numbers[self.numbers.index(id[1]) + 2]
-                        if sq.format(newl, newn) in self.opensquares:
-                            moves[sq.format(newl, newn)] = True
-
-            if self.letters.index(id[0]) - 1 >= 0 and self.numbers.index(id[1]) + 1 <= 7:
-                newl = self.letters[self.letters.index(id[0]) - 1]
-                newn = self.numbers[self.numbers.index(id[1]) + 1]
-                if sq.format(newl, newn) in self.opensquares:
-                    moves[sq.format(newl, newn)] = False
-                elif sq.format(newl, newn) in self.squares[not self.board[id].team]:
-                    if self.letters.index(id[0]) - 2 >= 0 and self.numbers.index(id[1]) + 2 <= 7:
-                        newl = self.letters[self.letters.index(id[0]) - 2]
-                        newn = self.numbers[self.numbers.index(id[1]) + 2]
-                        if sq.format(newl, newn) in self.opensquares:
-                            moves[sq.format(newl, newn)] = True
+            for i in [-1, 1]:
+                square = self.getrelsquare(id, i, 1)
+                if square:
+                    if square in self.opensquares:
+                        moves[square] = False
+                    elif square in self.squares[not self.board[square].team]:
+                        square2, piece2 = self.getrelsquare(id, 2 * i, 2)
+                        if square2 in self.opensquares:
+                            moves[square2] = True
 
         #move from team 2 to team 1 side
         if self.board[id].team == False or self.board[id].king == True:
-            if self.numbers.index(id[1]) - 1 >= 0 and self.letters.index(id[0]) + 1 <= 7:
-                newl = self.letters[self.letters.index(id[0]) + 1]
-                newn = self.numbers[self.numbers.index(id[1]) - 1]
-                if sq.format(newl, newn) in self.opensquares:
-                    moves[sq.format(newl, newn)] = False
-                elif sq.format(newl, newn) in self.squares[not self.board[id].team]:
-                    if self.numbers.index(id[1]) - 2 >= 0 and self.letters.index(id[0]) + 2 <= 7:
-                        newl = self.letters[self.letters.index(id[0]) + 2]
-                        newn = self.numbers[self.numbers.index(id[1]) - 2]
-                        if sq.format(newl, newn) in self.opensquares:
-                            moves[sq.format(newl, newn)] = True
-
-            if self.letters.index(id[0]) - 1 >= 0 and self.numbers.index(id[1]) - 1 >= 0:
-                newl = self.letters[self.letters.index(id[0]) - 1]
-                newn = self.numbers[self.numbers.index(id[1]) - 1]
-                if sq.format(newl, newn) in self.opensquares:
-                    moves[sq.format(newl, newn)] = False
-                elif sq.format(newl, newn) in self.squares[not self.board[id].team]:
-                    if self.letters.index(id[0]) - 2 >= 0 and self.numbers.index(id[1]) - 2 >= 0:
-                        newl = self.letters[self.letters.index(id[0]) - 2]
-                        newn = self.numbers[self.numbers.index(id[1]) - 2]
-                        if sq.format(newl, newn) in self.opensquares:
-                            moves[sq.format(newl, newn)] = True
+            for i in [-1, 1]:
+                square = self.getrelsquare(id, i, -1)
+                if square:
+                    if square in self.opensquares:
+                        moves[square] = False
+                    elif square in self.squares[not self.board[square].team]:
+                        square2, piece2 = self.getrelsquare(id, 2 * i, -2)
+                        if square2 in self.opensquares:
+                            moves[square2] = True
 
         return moves
 
     #take a piece, a letter index change, a number index change, return a touple of (square, piece)
     def getrelsquare(self, piece, ac, nc):
-        if self.letters.index(piece[0]) + ac in range(8) and self.numbers.inx(piece[1]) + nc in range(8):
+        if self.letters.index(piece[0]) + ac in range(8) and self.numbers.index(piece[1]) + nc in range(8):
             sq = '{0}{1}'
             newl = self.letters[self.letters.index(piece[0]) + ac]
             newn = self.numbers[self.numbers.index(piece[1]) + nc]
-            square = sq.format(newl, newn)
-            return square, self.board[square]
+            return sq.format(newl, newn)
 
     #make move - takes in piece position and new piece position
     def move(self, start, end):
