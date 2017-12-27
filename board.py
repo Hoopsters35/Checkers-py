@@ -108,7 +108,7 @@ class Board:
                     if square in self.opensquares:
                         moves[square] = False
                     elif square in self.squares[not self.board[square].team]:
-                        square2, piece2 = self.getrelsquare(id, 2 * i, 2)
+                        square2 = self.getrelsquare(id, 2 * i, 2)
                         if square2 in self.opensquares:
                             moves[square2] = True
 
@@ -120,7 +120,7 @@ class Board:
                     if square in self.opensquares:
                         moves[square] = False
                     elif square in self.squares[not self.board[square].team]:
-                        square2, piece2 = self.getrelsquare(id, 2 * i, -2)
+                        square2 = self.getrelsquare(id, 2 * i, -2)
                         if square2 in self.opensquares:
                             moves[square2] = True
 
