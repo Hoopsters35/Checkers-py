@@ -162,7 +162,7 @@ class Board:
             newl = self.letters[self.letters.index(piece[0]) + ac]
             newn = self.numbers[self.numbers.index(piece[1]) + nc]
             square = sq.format(newl, newn)
-            return (square, self.board[square])
+            return square, self.board[square]
 
     #make move - takes in piece position and new piece position
     def move(self, start, end):
