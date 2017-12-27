@@ -149,18 +149,13 @@ class Board:
             self.board[start] = '0'
             self.board[end].move(end)
             #get rid of the piece in middle
-            sq = '{0}{1}'
             newl = ''
             newn = ''
-            if self.letters.index(start[0]) < self.letters.index(end[0]):
-                newl = self.letters[self.letters.index(start[0]):self.letters.index(end[0])][1]
-            else:
-                newl = self.letters[self.letters.index(end[0]):self.letters.index(start[0])][1]
-            if self.numbers.index(start[1]) < self.numbers.index(end[1]):
-                newn = self.numbers[self.numbers.index(start[1]):self.numbers.index(end[1])][1]
-            else:
-                newn = self.numbers[self.numbers.index(end[1]):self.numbers.index(start[1])][1]
-            self.board[sq.format(newl, newn)] = '0'
+            if self.letters.index(start[0]) < self.letters.index(end[0]): newl = 1
+            else: newl = -1
+            if self.numbers.index(start[1]) < self.numbers.index(end[1]): newn = 1
+            else: newn = -1
+            self.board[self.getrelsquare(start, newl, newn)] = '0'
 
         self.checkking(end)
         self.updateboard()
