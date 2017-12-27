@@ -140,13 +140,11 @@ class Board:
     def move(self, start, end):
         #regular move
         if abs(int(end[1]) - int(start[1])) == 1:
-            tmp = self.board[end]
             self.board[end] = self.board[start]
             self.board[start] = '0'
             self.board[end].move(end)
         #code for capture
         elif abs(int(end[1]) - int(start[1])) == 2:
-            tmp = self.board[end]
             self.board[end] = self.board[start]
             self.board[start] = '0'
             self.board[end].move(end)
