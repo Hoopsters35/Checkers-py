@@ -160,7 +160,7 @@ class Board:
         self.checkking(end)
         self.updateboard()
         #TODO code for multicapture
-        #make the possible moves into dictionaries with a True False on whether its a capture move
+        #made the possible moves into dictionaries with a True False on whether its a capture move
 
         #check per team if they are on final square
     def checkking(self, id):
