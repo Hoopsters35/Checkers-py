@@ -26,17 +26,28 @@ while board.hasmove(t1):
     else:
         print('Team 2 to move.')
     cmd = getvalidmove(t1)
+    capture = board.possiblemoves(cmd.group(1))[cmd.group(2)]
     board.move(cmd.group(1), cmd.group(2))
-    while board.possiblemoves(cmd.group(1))[cmd.group(2)] == True:
-        ask = input('Make follow-up capture? [Y/N]: ')
-        if ask.lower() == 'y':
-            cmd2 = getvalidmove(t1)
-            while not (cmd2.group(1) == cmd.group(2) and board.possiblemoves(cmd2.group(2))[cmd2.group(2)] == True):
-                print('You must use', cmd.group(2), 'to make a capturing move.')
+    while capture == True:
+        #add if statement for if another capture is possible, otherwise break
+        anothercap = False
+        posmoves = board.possiblemoves(cmd.group(2))
+        for i in posmoves.keys():
+            if posmoves[i] == True:
+                anothercap = True
+        if not anothercap: break
+        else:
+            ask = input('Make follow-up capture? [Y/N]: ')
+            if ask.lower() == 'y':
+                board.display(t1)
                 cmd2 = getvalidmove(t1)
-            board.move(cmd2.group(1), cmd2.group(2))
-            cmd = cmd2
-        else: break
+                while not (cmd2.group(1) == cmd.group(2) and board.possiblemoves(cmd2.group(2))[cmd2.group(2)] == True):
+                    print('You must use', cmd.group(2), 'to make a capturing move.')
+                    cmd2 = getvalidmove(t1)
+                capture = board.possiblemoves(cmd2.group(1))[cmd2.group(2)]
+                board.move(cmd2.group(1), cmd2.group(2))
+                cmd = cmd2
+            else: break
     t1 = not t1
 #TODO display winner
 if t1 == True:
