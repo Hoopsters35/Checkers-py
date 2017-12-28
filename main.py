@@ -37,11 +37,11 @@ while board.hasmove(t1):
                 anothercap = True
         if not anothercap: break
         else:
+            board.display(t1)
             ask = input('Make follow-up capture? [Y/N]: ')
             if ask.lower() == 'y':
-                board.display(t1)
                 cmd2 = getvalidmove(t1)
-                while not cmd2.group(1) == cmd.group(2) and not board.possiblemoves(cmd2.group(1))[cmd2.group(2)] == True:
+                while not (cmd2.group(1) == cmd.group(2) and board.possiblemoves(cmd2.group(1))[cmd2.group(2)] == True):
                     print('You must use', cmd.group(2), 'to make a capturing move.')
                     cmd2 = getvalidmove(t1)
                 capture = board.possiblemoves(cmd2.group(1))[cmd2.group(2)]
