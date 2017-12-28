@@ -100,7 +100,7 @@ class Board:
     def possiblemoves(self, id):
         moves = {}
 
-        #move from team 1 to team 2 side
+        #Move from team 1 to team 2 side
         if self.board[id].team == True or self.board[id].king == True:
             for i in [-1, 1]:
                 square = self.getrelsquare(id, i, 1)
@@ -113,7 +113,7 @@ class Board:
                             if square2 in self.opensquares:
                                 moves[square2] = True
 
-        #move from team 2 to team 1 side
+        #Move from team 2 to team 1 side
         if self.board[id].team == False or self.board[id].king == True:
             for i in [-1, 1]:
                 square = self.getrelsquare(id, i, -1)
@@ -160,7 +160,7 @@ class Board:
         self.checkking(end)
         self.updateboard()
         #TODO code for multicapture
-        #make the possible moves into dictionaries with a True False on whether its a capture move
+        #made the possible moves into dictionaries with a True False on whether its a capture move
 
         #check per team if they are on final square
     def checkking(self, id):
