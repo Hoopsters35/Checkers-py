@@ -2,17 +2,15 @@ import board, re
 
 board = board.Board()
 t1 = True
-team = ''
 
 moveregex = re.compile('^([a-h][1-8]) ([a-h][1-8])$')
 
 while board.hasmove(t1):
-    if t1:
-        team = '1'
-    else:
-        team = '2'
     board.display(t1)
-    print('Team {0} to move.'.format(team))
+    if t1:
+        print('Team 1 to move.')
+    else:
+        print('Team 2 to move.')
     inp = input('Enter move [ie. a3 b4] ')
     cmd = moveregex.match(inp)
     while not (cmd and cmd.group(1) in board.squares[t1] and cmd.group(2) in board.possiblemoves(cmd.group(1)).keys()):
