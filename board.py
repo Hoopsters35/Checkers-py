@@ -10,10 +10,10 @@ class Board:
         self.squares = {True : set(), False : set()}
         self.opensquares = set()
 
-        #create board
+        #Create board
         for letter in self.letters:
             for num in range(1, 9):
-                #creates [letter][number] ID system
+                #Creates [letter][number] ID system
                 key = '{0}{1}'.format(letter, num)
                 #0 = unoccupied square, 1 = occupied by team 1, 2 = occupied by team 2, - = unoccupiable
                 val = '0'
@@ -25,17 +25,17 @@ class Board:
                     val = piece.Piece(False, key)
                 self.board[key] = val
 
-        #define validsquares
+        #Define validsquares
         for key in self.board.keys():
             if self.board[key] != '-':
                 self.validsquares.append(key)
 
-        #populates initial occupied and unoccupied square sets
+        #Populates initial occupied and unoccupied square sets
         self.updateboard()
 
-    #updates occupied and unoccupied squre sets
+    #Updates occupied and unoccupied squre sets
     def updateboard(self):
-        #must reset each set before updating
+        #Must reset each set before updating
         self.squares[True] = set()
         self.squares[False] = set()
         self.opensquares = set()
@@ -54,7 +54,7 @@ class Board:
         if team == True:
             print('  ___________________')
             print(' |                   |')
-            #print nums backwards to build board top down
+            #Print nums backwards to build board top down
             for num in '87654321':
                 print(num, end = '|  ')
                 for letter in self.letters:
@@ -72,7 +72,7 @@ class Board:
         elif team == False:
             print('  ___________________')
             print(' |                   |')
-            #print nums backwards to build board top down
+            #Print nums backwards to build board top down
             for num in self.numbers:
                 print(num, end = '|  ')
                 for letter in 'hgfedcba':
@@ -87,7 +87,7 @@ class Board:
             print(' |___________________|')
             print('    h g f e d c b a')
 
-    #hasmove - takes bool for team, returns bool for if that team has a move
+    #Hasmove - takes bool for team, returns bool for if that team has a move
     def hasmove(self, team):
         if self.squares[team] == set():
             return False
@@ -96,7 +96,7 @@ class Board:
                 return True
         return False
 
-    #make possiblemoves - takes position id, returns set of possible moves for that piece
+    #Make possiblemoves - takes position id, returns dictionary of possible moves for that piece and whether they are a capturing move
     def possiblemoves(self, id):
         moves = {}
 
@@ -128,7 +128,7 @@ class Board:
 
         return moves
 
-    #take a piece, a letter index change, a number index change, return a touple of (square, piece)
+    #Take a piece, a letter index change, a number index change, return a touple of (square, piece)
     def getrelsquare(self, piece, ac, nc):
         if self.letters.index(piece[0]) + ac in range(8) and self.numbers.index(piece[1]) + nc in range(8):
             sq = '{0}{1}'
@@ -136,19 +136,19 @@ class Board:
             newn = self.numbers[self.numbers.index(piece[1]) + nc]
             return sq.format(newl, newn)
 
-    #make move - takes in piece position and new piece position
+    #Make move - takes in piece position and new piece position
     def move(self, start, end):
-        #regular move
+        #Regular move
         if abs(int(end[1]) - int(start[1])) == 1:
             self.board[end] = self.board[start]
             self.board[start] = '0'
             self.board[end].move(end)
-        #code for capture
+        #Code for capture
         elif abs(int(end[1]) - int(start[1])) == 2:
             self.board[end] = self.board[start]
             self.board[start] = '0'
             self.board[end].move(end)
-            #get rid of the piece in middle
+            #Get rid of the piece in middle
             newl = ''
             newn = ''
             if self.letters.index(start[0]) < self.letters.index(end[0]): newl = 1
@@ -159,10 +159,8 @@ class Board:
 
         self.checkking(end)
         self.updateboard()
-        #TODO code for multicapture
-        #made the possible moves into dictionaries with a True False on whether its a capture move
 
-        #check per team if they are on final square
+        #Check per team if they are on final square
     def checkking(self, id):
         if self.board[id].team == True and id[1] == '8':
             self.board[id].kingme()
