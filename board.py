@@ -6,9 +6,9 @@ class Board:
         self.letters = 'abcdefgh'
         self.numbers = '12345678'
 
-        self.validsquares = []
+        self.validSquares = []
         self.squares = {True : set(), False : set()}
-        self.opensquares = set()
+        self.openSquares = set()
 
         #Create board
         for letter in self.letters:
@@ -25,25 +25,25 @@ class Board:
                     val = piece.Piece(False, key)
                 self.board[key] = val
 
-        #Define validsquares
+        #Define validSquares
         for key in self.board.keys():
             if self.board[key] != '-':
-                self.validsquares.append(key)
+                self.validSquares.append(key)
 
         #Populates initial occupied and unoccupied square sets
-        self.updateboard()
+        self.update_board()
 
     #Updates occupied and unoccupied squre sets
-    def updateboard(self):
+    def update_board(self):
         #Must reset each set before updating
         self.squares[True] = set()
         self.squares[False] = set()
-        self.opensquares = set()
-        for square in self.validsquares:
+        self.openSquares = set()
+        for square in self.validSquares:
             if self.board[square] == '-':
                 pass
             elif self.board[square] == '0':
-                self.opensquares.add(square)
+                self.openSquares.add(square)
             elif self.board[square].team == True:
                 self.squares[True].add(square)
             elif self.board[square].team == False:
@@ -88,48 +88,48 @@ class Board:
             print('    h g f e d c b a')
 
     #Hasmove - takes bool for team, returns bool for if that team has a move
-    def hasmove(self, team):
+    def has_move(self, team):
         if self.squares[team] == set():
             return False
-        for piece in [squares for squares in self.validsquares if squares in self.squares[team]]:
-            if not self.possiblemoves(piece) == {}:
+        for piece in [squares for squares in self.validSquares if squares in self.squares[team]]:
+            if not self.possible_moves(piece) == {}:
                 return True
         return False
 
-    #Make possiblemoves - takes position id, returns dictionary of possible moves for that piece and whether they are a capturing move
-    def possiblemoves(self, id):
+    #Make possible_moves - takes position id, returns dictionary of possible moves for that piece and whether they are a capturing move
+    def possible_moves(self, id):
         moves = {}
 
         #Move from team 1 to team 2 side
         if self.board[id].team == True or self.board[id].king == True:
             for i in [-1, 1]:
-                square = self.getrelsquare(id, i, 1)
+                square = self.get_relative_square(id, i, 1)
                 if square:
-                    if square in self.opensquares:
+                    if square in self.openSquares:
                         moves[square] = False
                     elif square in self.squares[not self.board[id].team]:
-                        square2 = self.getrelsquare(id, 2 * i, 2)
+                        square2 = self.get_relative_square(id, 2 * i, 2)
                         if square2:
-                            if square2 in self.opensquares:
+                            if square2 in self.openSquares:
                                 moves[square2] = True
 
         #Move from team 2 to team 1 side
         if self.board[id].team == False or self.board[id].king == True:
             for i in [-1, 1]:
-                square = self.getrelsquare(id, i, -1)
+                square = self.get_relative_square(id, i, -1)
                 if square:
-                    if square in self.opensquares:
+                    if square in self.openSquares:
                         moves[square] = False
                     elif square in self.squares[not self.board[id].team]:
-                        square2 = self.getrelsquare(id, 2 * i, -2)
+                        square2 = self.get_relative_square(id, 2 * i, -2)
                         if square2:
-                            if square2 in self.opensquares:
+                            if square2 in self.openSquares:
                                 moves[square2] = True
 
         return moves
 
     #Take a piece, a letter index change, a number index change, return a touple of (square, piece)
-    def getrelsquare(self, piece, ac, nc):
+    def get_relative_square(self, piece, ac, nc):
         if self.letters.index(piece[0]) + ac in range(8) and self.numbers.index(piece[1]) + nc in range(8):
             sq = '{0}{1}'
             newl = self.letters[self.letters.index(piece[0]) + ac]
@@ -155,13 +155,13 @@ class Board:
             else: newl = -1
             if self.numbers.index(start[1]) < self.numbers.index(end[1]): newn = 1
             else: newn = -1
-            self.board[self.getrelsquare(start, newl, newn)] = '0'
+            self.board[self.get_relative_square(start, newl, newn)] = '0'
 
-        self.checkking(end)
-        self.updateboard()
+        self.check_king(end)
+        self.update_board()
 
         #Check per team if they are on final square
-    def checkking(self, id):
+    def check_king(self, id):
         if self.board[id].team == True and id[1] == '8':
             self.board[id].kingme()
         elif self.board[id].team == False and id[1] == '1':
