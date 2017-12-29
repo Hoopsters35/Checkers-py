@@ -50,7 +50,6 @@ while board.hasmove(t1):
                     print('You must use', cmd.group(2), 'to make a capturing move.')
                     cmd2 = get_valid_move(t1)
                 #not sure if this redefinition of capture is necessary as the move must be a cap
-                capture = board.possiblemoves(cmd2.group(1))[cmd2.group(2)]
                 board.move(cmd2.group(1), cmd2.group(2))
                 #makes the new move the old move in order to check for a next jump
                 cmd = cmd2
@@ -58,6 +57,7 @@ while board.hasmove(t1):
             else: break
     t1 = not t1
 #display winner
+board.display(not t1)
 if t1 == True:
     print('Congratulations team 2! You win!')
 else:
